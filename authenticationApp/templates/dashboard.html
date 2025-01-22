@@ -1,0 +1,197 @@
+{% extends 'layouts/app.html' %} 
+
+{% block content %}
+<style>
+  /* Body Background */
+  body {
+    background: linear-gradient(145deg, #f5e6da, #e6d6c3);
+    color: #5a4635;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Verdana', sans-serif;
+  }
+
+  /* Navbar Styles */
+  .navbar {
+    background: linear-gradient(135deg, #e6d6c3, #d4c1ac);
+    padding: 15px 20px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .navbar-brand {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #5a4635;
+    letter-spacing: 1px;
+  }
+
+  .navbar-nav .nav-link {
+    color: #5a4635;
+    margin-right: 15px;
+    font-weight: 500;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+
+  .navbar-nav .nav-link:hover {
+    color: #967052;
+    transform: translateY(-3px);
+  }
+
+  /* Container Styles */
+  .container-fluid {
+    padding: 20px;
+  }
+
+  /* Card Styles */
+  .card {
+    background: #fff7f0;
+    border: 1px solid #d4c1ac;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(212, 193, 172, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(212, 193, 172, 0.3);
+  }
+
+  .card img {
+    height: 60px;
+    margin-bottom: 15px;
+  }
+
+  .card h5 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #5a4635;
+  }
+
+  .card p {
+    font-size: 1rem;
+    color: #7d6a54;
+  }
+
+  /* Button Styles */
+  .btn-dark {
+    background: linear-gradient(135deg, #d4c1ac, #967052);
+    border: none;
+    border-radius: 30px;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    color: #ffffff;
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+
+  .btn-dark:hover {
+    background: linear-gradient(135deg, #967052, #5a4635);
+    transform: translateY(-4px);
+  }
+
+  .btn-dark:active {
+    background: #d4c1ac;
+    transform: translateY(2px);
+  }
+
+  .text-muted {
+    color: #7d6a54 !important;
+  }
+
+  /* Media Query for Responsiveness */
+  @media (max-width: 768px) {
+    .card {
+      margin-bottom: 20px;
+    }
+  }
+</style>
+
+<!-- Navbar -->
+
+<nav class="navbar navbar-expand-lg">
+  
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'courses:listCourses' %}">Courses</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+
+<div class="container-fluid">
+  <div class="row justify-content-center align-items-center vh-100">
+    <!-- Dashboard Header -->
+    <div class="col-md-10">
+      <div class="card p-5">
+        <h2 class="text-center mb-4">Welcome, {{ request.user.username }}!</h2>
+        <p class="text-center text-muted mb-4">
+          Your eLearning journey starts here. Explore and achieve your goals!
+        </p>
+
+        <!-- Dashboard Features -->
+        <div class="row text-center">
+          <!-- Add your cards as needed -->
+          <div class="col-md-4 mb-4">
+            <div class="card p-4 text-center">
+              <img src="/static/bg1.svg" alt="Courses Overview">
+              <h5>Courses Overview</h5>
+              <p>Track all available courses.</p>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card p-4 text-center">
+              <img src="/static/bg1.svg" alt="Analysis">
+              <h5>Analysis</h5>
+              <p>Analysis of users.</p>
+            </div>
+          </div>
+
+          
+          <div class="col-md-4 mb-4">
+            <div class="card p-4 text-center">
+              <img src="/static/bg1.svg" alt="users">
+              <h5>Users</h5>
+              <p>Users</p>
+            </div>
+          </div>
+
+          
+          <div class="col-md-4 mb-4">
+            <div class="card p-4 text-center">
+              <img src="/static/bg1.svg" alt="mylearning">
+              <h5>My Learning</h5>
+              <p>Your Current orogress status</p>
+            </div>
+          </div>
+
+          
+          <div class="col-md-4 mb-4">
+            <div class="card p-4 text-center">
+              <img src="/static/bg1.svg" alt="Analysis">
+              <h5>Analysis</h5>
+              <p>Analysis of users.</p>
+            </div>
+          </div>
+          <!-- Repeat for other features -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

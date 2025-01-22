@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Course</title>
+    <style>
+        body {
+            background: linear-gradient(145deg, #f5e6da, #e6d6c3);
+            color: #5a4635;
+            font-family: 'Verdana', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff7f0;
+            border: 1px solid #d4c1ac;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(212, 193, 172, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #5a4635;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #5a4635;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d4c1ac;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #5a4635;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #7d6a54;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #6c4f3d;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #8a6a56;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+  
+<div class="container">
+    <div class="card">
+      <h2 class="text-center mb-4">All Courses</h2>
+      <form id="course-form" method="POST">
+        {% csrf_token %}
+        <ul class="course-list">
+          {% if courses %}
+          {% for course in courses %}
+          <li>
+            <a href="{{ course.url }}">{{ course.title }}</a>
+            <input type="checkbox" name="selected_courses" value="{{ course.title }}" id="course-{{ forloop.counter }}">
+          </li>
+          {% endfor %}
+          {% else %}
+          <li class="text-center text-muted">No courses available at the moment. Please check back later!</li>
+          {% endif %}
+        </ul>
+        <div class="actions-container">
+          <button type="submit" class="btn btn-danger">Delete Selected</button>
+        </div>
+      </form>
+  
+      {% if messages %}
+        <div class="alert alert-success mt-4">
+          {% for message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  
+  <script>
+    const checkboxes = document.querySelectorAll('input[name="selected_courses"]');
+    const updateButton = document.getElementById('update-button');
+  
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', () => {
+        const selected = document.querySelectorAll('input[name="selected_courses"]:checked');
+        updateButton.disabled = selected.length !== 1;
+      });
+    });
+  </script>
+  {% endblock %}
+</body>
+</html>

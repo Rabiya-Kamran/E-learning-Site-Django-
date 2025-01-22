@@ -1,0 +1,212 @@
+{% block content %}
+<style>
+    /* Custom styles for a modern, clean look */
+    body {
+        background: linear-gradient(145deg, #e9c6ac, #b9a88e);
+        font-family: 'Poppins', sans-serif;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .card {
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 900px;
+        padding: 30px;
+        position: relative;
+        margin: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+    }
+
+    .card h2 {
+        font-size: 2rem;
+        font-weight: 600;
+        text-align: center;
+        color: #4f4a44;
+        margin-bottom: 20px;
+    }
+
+    .course-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .course-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        background: #fff5e6;
+        border: 1px solid #f0e0c9;
+        border-radius: 10px;
+        padding: 12px 20px;
+        transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .course-list li:hover {
+        background: #f8e2b9;
+        transform: translateX(5px);
+    }
+
+    .course-list a {
+        text-decoration: none;
+        color: #5a4635;
+        font-weight: 500;
+        font-size: 1.2rem;
+        flex-grow: 1;
+    }
+
+    .course-list input[type="checkbox"] {
+        transform: scale(1.3);
+        margin-left: 15px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        text-align: center;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        margin: 10px;
+    }
+
+    .btn-danger {
+        background-color: #e94e77;
+        color: #fff;
+    }
+
+    .btn-danger:hover {
+        background-color: #d03960;
+        transform: scale(1.05);
+    }
+
+    .btn-warning {
+        background-color: #f59e42;
+        color: #fff;
+    }
+
+    .btn-warning:hover {
+        background-color: #e48734;
+        transform: scale(1.05);
+    }
+
+    .btn-info {
+        background-color: #4db8ff;
+        color: #fff;
+    }
+
+    .btn-info:hover {
+        background-color: #3883c9;
+        transform: scale(1.05);
+    }
+
+    .add-course-container {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+    }
+
+    .actions-container {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 20px;
+    }
+
+    .alert {
+        background-color: #fff5d6;
+        color: #e74c3c;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+</style>
+
+<div class="container">
+    <div class="add-course-container">
+        <a href="{% url 'courses:addCourse' %}" class="btn btn-danger">Add Course +</a>
+    </div>
+
+    <div class="card">
+        <h2>All Courses</h2>
+
+        
+
+        <form id="course-form" method="POST">
+            {% csrf_token %}
+            <ul class="course-list">
+                {% if courses %}
+                {% for course in courses %}
+                <li>
+                    <a href="{% url 'courses:courseDetails' course.title %}">{{ course.title }}</a>
+                    <input type="checkbox" name="selected_courses" value="{{ course.title }}" id="course-{{ forloop.counter }}">
+                </li>
+                {% endfor %}
+                {% else %}
+                <li class="text-center text-muted">No courses available at the moment. Please check back later!</li>
+                {% endif %}
+            </ul>
+
+            <div class="actions-container">
+                <button type="submit" formaction="{% url 'courses:deleteCourse' %}" class="btn btn-danger">Delete Selected</button>
+                <button type="submit" formaction="{% url 'courses:updateCourse' %}" class="btn btn-warning">Update Selected</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Wait for the DOM to be fully loaded before selecting checkboxes
+    document.addEventListener('DOMContentLoaded', function () {
+        // Select all checkboxes and the Update button
+        const checkboxes = document.querySelectorAll('input[name="selected_courses"]');
+        const updateButton = document.getElementById('update-button');
+
+        // Function to update the button's disabled state
+        function updateButtonState() {
+            // Count the number of checked checkboxes
+            const selected = document.querySelectorAll('input[name="selected_courses"]:checked');
+
+            // Debugging - console log the selected count
+            console.log('Selected checkboxes: ', selected.length);
+
+            // Disable the button if more than one checkbox is selected or if none are selected
+            updateButton.disabled = selected.length !== 1;
+        }
+
+        // Add event listeners for all checkboxes
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateButtonState);
+        });
+
+        // Initial check when the page loads in case some checkboxes are pre-selected
+        updateButtonState();
+    });
+</script>
+
+{% endblock %}

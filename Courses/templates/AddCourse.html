@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a Course</title>
+    <style>
+        body {
+            background: linear-gradient(145deg, #f5e6da, #e6d6c3);
+            color: #5a4635;
+            font-family: 'Verdana', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff7f0;
+            border: 1px solid #d4c1ac;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(212, 193, 172, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #5a4635;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #5a4635;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d4c1ac;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #5a4635;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #7d6a54;
+        }
+
+        .alert {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .alert.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #5a4635;
+            text-decoration: none;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #6c4f3d;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #8a6a56;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+            const messagesDiv = document.querySelector(".messages");
+
+            form.addEventListener("submit", function (e) {
+                e.preventDefault(); // Prevent default form submission
+
+                // Simulate server-side success message
+                const successMessage = document.createElement("div");
+                successMessage.className = "alert success";
+                successMessage.textContent = "Course added successfully!";
+                messagesDiv.innerHTML = ""; // Clear any existing messages
+                messagesDiv.appendChild(successMessage);
+
+                // Wait for 1 second, then submit the form for redirection
+                setTimeout(() => {
+                    form.submit(); // Submit the form
+                }, 1000);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Add a New Course</h2>
+
+        <!-- Display messages dynamically -->
+        <div class="messages"></div>
+
+        <!-- Course Form -->
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="{{ form.title.id_for_label }}">Title</label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <div class="alert error">
+                        {% for error in form.title.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        
+            <div class="form-group">
+                <label for="{{ form.description.id_for_label }}">Description</label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <div class="alert error">
+                        {% for error in form.description.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        
+            <button type="submit">Add Course</button>
+        </form>
+        
+
+        <!-- Back to Course List -->
+        <a href="{% url 'courses:listCourses' %}" class="back-button">Back to Course List</a>
+    </div>
+</body>
+</html>

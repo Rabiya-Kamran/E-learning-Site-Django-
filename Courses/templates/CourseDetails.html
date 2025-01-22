@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Details</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for custom font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-to-br from-purple-100 via-indigo-50 to-blue-100 min-h-screen flex items-center justify-center font-poppins">
+
+    <!-- Main Container -->
+    <div class="container mx-auto px-6 py-12 bg-white rounded-2xl shadow-xl transform transition-all duration-500 hover:scale-105">
+
+        <!-- Course Card -->
+        <div class="course-card space-y-8 p-8 rounded-xl shadow-lg border border-gray-300">
+            
+            <!-- Course Title with Hover Animation -->
+            <h1 class="course-title text-3xl font-extrabold text-gray-800 leading-tight tracking-tight transform transition-all duration-300 hover:text-indigo-600 hover:scale-105">
+                {{ course.title }}
+            </h1>
+
+            <!-- Divider -->
+            <div class="divider border-t-4 border-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-16 mx-auto mb-6"></div>
+
+            <!-- Course Description with Animation -->
+            <p class="course-description text-gray-600 text-lg leading-relaxed tracking-wide transform transition-all duration-300 hover:text-gray-700 hover:scale-105">
+                {{ course.description }}
+            </p>
+
+        </div>
+
+        <!-- Back Button with Hover Effects -->
+        <div class="text-center mt-8">
+            <a href="{% url 'courses:listCourses' %}"
+               class="btn-back inline-flex items-center px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold rounded-lg shadow-md hover:bg-gradient-to-l hover:from-purple-600 hover:to-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 transform transition-all duration-300 ease-in-out">
+                <i class="bi bi-arrow-left mr-3 text-xl"></i> Back to Courses List
+            </a>
+        </div>
+    </div>
+
+</body>
+
+</html>
