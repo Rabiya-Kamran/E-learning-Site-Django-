@@ -97,7 +97,7 @@ Below is the structure of the project directory:
 ├── requirements.txt         # List of required Python packages
 └── settings.py              # Django project settings
 
-
+```
 
 This project demonstrates the foundational aspects of building a Django web site, including user authentication, a dashboard, and a contact form. It is designed to be beginner-friendly while offering room for further enhancements and feature additions.
 
